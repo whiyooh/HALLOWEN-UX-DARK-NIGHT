@@ -7,6 +7,8 @@ let isModalTransitioning = false;
 let openingTimer = null;
 
 const VIDEO_FALLBACK_TIME = 30000;
+// recriar blocos comoo carrouseis 
+
 // Definição dos dados para os modais//
 const modals = {
 manual: {
@@ -23,7 +25,9 @@ manual: {
       
   `
 },
-
+// receiar blocos como carrouseis de uma forma mais organizada
+ sem alterar extamente o repositorio de uma forma completa trazendo mais pontos e segurança para a experiencia do usuário 
+  
 gifts: {
     eyebrow: "Festa Fantasia",
     title: "Inscrições para festa fantasia",
