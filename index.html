@@ -79,53 +79,145 @@
       alt="Logo da festa UX DARK NIGHT"
     />
 
-
     <p class="intro-text">
       Uma noite sombria e cheia de surpresas.
     </p>
 
-    <div class="event-info">
-      <div class="event-date">
-        <span>Data</span>
-        <strong>30 DE OUTUBRO</strong>
+    <div class="invite-opening-details">
+      <div class="event-info">
+        <div class="event-date">
+          <span>Data</span>
+          <strong>30 DE OUTUBRO</strong>
+        </div>
+        <p><strong>Horário:</strong> 17:00</p>
+      </div>
+    </div>
+
+  </article>
+
+  <section
+    class="invite-carousel"
+    id="invite-carousel"
+    aria-label="Informações do convite"
+    aria-roledescription="carrossel"
+    tabindex="0"
+  >
+    <div class="carousel-stage">
+      <button class="carousel-arrow" id="previous-slide" type="button" aria-label="Informação anterior" disabled>
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <div class="carousel-viewport" id="carousel-viewport">
+        <div class="carousel-track" id="carousel-track">
+          <article class="invite-slide is-active" aria-label="Informação 1 de 3" aria-hidden="false">
+            <header class="slide-header">
+              <img src="icons/manual (2).png" alt="" />
+              <div>
+                <p class="slide-eyebrow">Informação 01</p>
+                <h2>Manual do convidado</h2>
+              </div>
+            </header>
+            <div class="slide-body">
+              <p><strong>A noite mais sombria da UX está chegando.</strong></p>
+              <p>Para você aproveitar a <strong>UX DARK NIGHT</strong> do começo ao fim, reunimos aqui tudo o que você precisa saber antes de entrar nessa experiência.</p>
+
+              <ul>
+                <li><span aria-hidden="true">&#x1F578;&#xFE0F;</span> <strong>Dress Code</strong><br />Sua melhor fantasia</li>
+              </ul>
+              <p>Leia o manual, prepare sua fantasia e venha pronto para uma noite fora do comum.</p>
+              <p><strong>O resto da noite... a gente deixa para você descobrir.</strong> <span aria-hidden="true">&#x1F440;</span></p>
+            </div>
+          </article>
+
+          <article class="invite-slide" aria-label="Informação 2 de 3" aria-hidden="true">
+            <header class="slide-header">
+              <img src="icons/icon presente.png" alt="" />
+              <div>
+                <p class="slide-eyebrow">Informação 02</p>
+                <h2>Concurso de fantasia e aperitivos</h2>
+              </div>
+            </header>
+            <div class="slide-body">
+              <h3>Inscrições para o concurso de fantasia</h3>
+              <p><strong>Fantasia em jogo!</strong> <span aria-hidden="true">&#x1F47B;</span></p>
+              <p>A sua fantasia pode ser muito mais do que um look de Halloween. <strong>Ela pode levar o prêmio.</strong></p>
+              <p>Quer entrar na disputa? Então faça sua inscrição no <strong>Concurso de Fantasia da UX DARK NIGHT</strong> e prepare-se para mostrar toda a sua criatividade.</p>
+
+              <h3>Como participar?</h3>
+              <ul>
+                <li><span aria-hidden="true">&#x1F577;&#xFE0F;</span> Escolha sua fantasia</li>
+                <li><span aria-hidden="true">&#x1F577;&#xFE0F;</span> Faça sua inscrição pelo formulário</li>
+                <li><span aria-hidden="true">&#x1F577;&#xFE0F;</span> Apareça na DARK NIGHT caracterizado</li>
+                <li><span aria-hidden="true">&#x1F577;&#xFE0F;</span> Prepare-se para o momento do desfile e da avaliação</li>
+              </ul>
+              <p>Quem sabe a fantasia mais comentada da noite não é a sua? <span aria-hidden="true">&#x1F5A4;</span></p>
+              <p><strong>Link de inscrição:</strong> <a href="https://forms.cloud.microsoft/r/eWvsX1jyBb" target="_blank" rel="noopener">Inscrição – Concurso de Fantasias | UX DARK NIGHT – Preencher o formulário</a></p>
+              <p><strong>Inscrições até:</strong> 23/10/2026</p>
+
+              <h3>Aperitivos da noite <span aria-hidden="true">&#x1F578;&#xFE0F;</span></h3>
+              <p>Você já sabe que vai ter fantasia.</p>
+              <p>Mas a gente também preparou algumas coisas para deixar essa noite ainda melhor...</p>
+              <ul>
+                <li><strong>DJ</strong></li>
+                <li><strong>CHOPP</strong></li>
+                <li><strong>COMIDINHAS</strong></li>
+                <li><strong>ATRAÇÕES</strong></li>
+              </ul>
+              <p>Porque na DARK NIGHT você nunca sabe exatamente o que vem depois.</p>
+              <p><strong>E isso é só o começo.</strong></p>
+              <p><strong>Prepare-se para uma noite de música, diversão, encontros e algumas surpresas pelo caminho.</strong></p>
+              <p><strong>UX DARK NIGHT</strong></p>
+            </div>
+          </article>
+
+          <article class="invite-slide" aria-label="Informação 3 de 3" aria-hidden="true">
+            <header class="slide-header">
+              <img src="icons/icon local.png" alt="" />
+              <div>
+                <p class="slide-eyebrow">Informação 03</p>
+                <h2>Localização</h2>
+              </div>
+            </header>
+            <div class="slide-body">
+              <p><strong>Espaço da Festa</strong></p>
+              <p>Aqui mesmo! Na UX Group</p>
+              <p>Avenida Juruá, 548, aphaville</p>
+              <p>Teremos um scaperoom no terceiro andar com uma decoração de arrepiar!</p>
+              <p>prepare-se para se divertir e se assustar!</p>
+              <div class="slide-actions">
+                <a class="button" href="https://maps.app.goo.gl/eBpDKjgQDotDuZQo9" target="_blank" rel="noopener">Abrir no Google Maps</a>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
 
-      <p><strong>Horário:</strong> 17:00</p>
-
+      <button class="carousel-arrow" id="next-slide" type="button" aria-label="Próxima informação">
+        <span aria-hidden="true">›</span>
+      </button>
     </div>
 
-    <nav class="action-grid" aria-label="Opções do convite">
-     <button class="action-card" type="button" onclick="openModal('manual')">
-  <img src="icons/manual (2).png" alt="Manual do convidado" />
-  <span>Manual do convidado</span>
-</button>
-
-      <button class="action-card" type="button" onclick="openModal('gifts')">
-        <img src="icons/icon presente.png" alt="Festa fantasia" />
-        <span>Festa fantasia<br />inscrições</span>
-      </button>
-
-      <button class="action-card" type="button" onclick="openModal('location')">
-        <img src="icons/icon local.png" alt="Local" />
-        <span>Localização da festa</span>
-      </button>
-
-      <button class="action-card" type="button" onclick="openModal('rsvp')">
-        <img src="icons/icon confirma.png" alt="APERITIVOS DA NOITE" />
-        <span>APERITIVOS DA NOITE</span>
-      </button>
+    <nav class="carousel-progress" aria-label="Progresso das informações">
+      <button class="progress-dot is-active" type="button" aria-label="Ir para informação 1" aria-current="step"></button>
+      <button class="progress-dot" type="button" aria-label="Ir para informação 2"></button>
+      <button class="progress-dot" type="button" aria-label="Ir para informação 3"></button>
     </nav>
-  </article>
+    <p class="carousel-status" id="carousel-status" aria-live="polite">Informação 1 de 3</p>
+  </section>
+
+  <section class="invite-unlocked" id="invite-unlocked" hidden aria-live="polite">
+    <p class="slide-eyebrow">Conteúdo concluído</p>
+    <h2>Agora é a sua vez.</h2>
+    <p>Continue descendo para encontrar o vídeo.</p>
+  </section>
+
+  <section class="invite-video" id="invite-video" hidden aria-label="Vídeo da festa">
+    <video controls playsinline preload="none">
+      <source src="video final/Composição 1.mp4" type="video/mp4" />
+      Seu navegador não conseguiu carregar o vídeo.
+    </video>
+  </section>
 </section>
-
-    <div class="modal-layer" id="modal-layer" aria-hidden="true">
-      <div class="modal-backdrop" onclick="closeModal()"></div>
-
-      <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button class="modal-close" type="button" onclick="closeModal()" aria-label="Fechar">×</button>
-        <div id="modal-content"></div>
-      </section>
-    </div>
   </main>
 
 </body>

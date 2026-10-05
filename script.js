@@ -1,88 +1,23 @@
-const modalLayer = document.getElementById("modal-layer");
-const modalContent = document.getElementById("modal-content");
 const openingVideo = document.getElementById("opening-video");
-
-let currentModal = null;
-let isModalTransitioning = false;
 let openingTimer = null;
-
 const VIDEO_FALLBACK_TIME = 30000;
-// recriar blocos comoo carrouseis 
+const carousel = document.getElementById("invite-carousel");
+const carouselViewport = document.getElementById("carousel-viewport");
+const carouselTrack = document.getElementById("carousel-track");
+const slides = [...document.querySelectorAll(".invite-slide")];
+const progressDots = [...document.querySelectorAll(".progress-dot")];
+const previousSlideButton = document.getElementById("previous-slide");
+const nextSlideButton = document.getElementById("next-slide");
+const carouselStatus = document.getElementById("carousel-status");
+const unlockedMessage = document.getElementById("invite-unlocked");
+const inviteVideo = document.getElementById("invite-video");
+const inviteVideoPlayer = inviteVideo?.querySelector("video");
 
-// Definição dos dados para os modais//
-const modals = {
-manual: {
-  title: "Tudo o que você precisa saber",
-  image: "icons/manual (2).png",
-  body: `
-    <p>Para manter o encanto da noite intacto, siga estas orientações:</p>
-
-      <ul>
-        <li>Traje casual, com liberdade para toques de fantasia.</li>
-        <li>Ajude-nos a preservar o clima agradável para todos que atravessarem a porta com você.</li>
-        <li>Prepare-se para uma noite de arrepios, boas risadas e recordações.</li>
-      </ul>
-      
-  `
-},
-// receiar blocos como carrouseis de uma forma mais organizada
- sem alterar extamente o repositorio de uma forma completa trazendo mais pontos e segurança para a experiencia do usuário 
-  
-gifts: {
-    eyebrow: "Festa Fantasia",
-    title: "Inscrições para festa fantasia",
-    image: "icons/icon presente.png",
-    body: `
-      <p>Bora garantir sua vaga na festa mais assustadoramente boa do ano? Só seguir aqui:</p>
-      <ul>
-      <li>Inscreva-se no link: <a href="https://forms.gle/6g7k1Z2v5X8x3V9F9" target="_blank" rel="noopener">https://forms.gle/6g7k1Z2v5X8x3V9F9</a></li>
-        <li>Confirme até dia 25/10 pra não ficar de fora.</li>
-        <li>Seje assustadoramente criativo!</li>
-      </ul>
-    `
-  },
-
-  location: {
-    eyebrow: "Festa",
-    title: "Localização",
-    body: `
-      <p><strong>Espaço da Festa</strong></p>
-      <p> Aqui mesmo! Na UX Group<br></p>
-      <p> Avenida Juruá, 548, aphaville</p>
-      <p> Teremos um scaperoom no terceiro andar com uma decoração de arrepiar!</p>
-      <p> prepare-se para se divertir e se assustar!</p>
-
-      <div class="modal-actions">
-        <a class="button" href="https://maps.app.goo.gl/eBpDKjgQDotDuZQo9" target="_blank" rel="noopener">
-          Abrir no Google Maps
-        </a>
-      </div>
-    `
-  },
-/* redirecionamento dos aperitivos  */
-  rsvp: {
-    eyebrow: "Aperitivos",
-    title: "Aperitivos",
-    image: "icons/icon confirma.png",
-    body: `
-      <p>A mesa desta noite foi pensada para acompanhar o clima da festa.</p>
-      <ul>
-        <li>Aperitivos temáticos serão servidos à luz de velas durante a festa.</li>
-        <li>Teremos choop. Beba com moderação: nem todo efeito desaparece com o amanhecer.</li>
-      </ul>
-      <div class="modal-actions">
-      <a
-  class="button combined-video-button"
-  href="aperitivos.html"
-  target="_blank"
-  rel="noopener"
->
-  combinado!
-</a>
-      </div>
-    `
-  }
-};
+let currentSlide = 0;
+const viewedSlides = new Set();
+let informationCompleted = false;
+let slideViewTimer = null;
+const SLIDE_VIEW_DURATION = 1200;
 
 function goToScreen(screenId) {
   document.querySelectorAll(".screen").forEach((screen) => {
@@ -93,6 +28,10 @@ function goToScreen(screenId) {
 
   if (target) {
     target.classList.add("active");
+    if (screenId === "screen-invite") {
+      updateCarousel();
+      scheduleSlideView();
+    }
   }
 }
 
@@ -164,85 +103,97 @@ function finishOpeningVideo() {
 openingVideo?.addEventListener("loadedmetadata", syncVideoProgress);
 openingVideo?.addEventListener("ended", finishOpeningVideo);
 
-function openModal(type) {
-  if (isModalTransitioning) return;
-  if (!modals[type]) return;
-  if (!modalLayer || !modalContent) return;
+function updateCarousel() {
+  if (!carouselTrack || !carouselViewport || !slides.length) return;
 
-  isModalTransitioning = true;
-  currentModal = type;
+  const activeSlide = slides[currentSlide];
+  const offset = activeSlide.offsetLeft - (carouselViewport.clientWidth - activeSlide.offsetWidth) / 2;
+  carouselTrack.style.transform = `translateX(${-offset}px)`;
 
-  const modal = modals[type];
+  slides.forEach((slide, index) => {
+    const isActive = index === currentSlide;
+    slide.classList.toggle("is-active", isActive);
+    slide.setAttribute("aria-hidden", String(!isActive));
+  });
 
-  modalContent.innerHTML = `
-    <div class="modal-hero">
-      <img src="${modal.image}" alt="" />
-      <div class="modal-title-over">
-        <h2 id="modal-title">${modal.title}</h2>
-      </div>
-    </div>
-
-    <div class="modal-body">
-      ${modal.body}
-
-      ${type !== "rsvp" && type !== "location" ? `
-        <div class="modal-actions">
-          <button class="button" type="button" onclick="closeModal()">Fechar</button>
-        </div>
-      ` : ""}
-    </div>
-  `;
-
-  modalLayer.classList.add("active");
-  modalLayer.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
-
-  setTimeout(() => {
-    isModalTransitioning = false;
-  }, 360);
-}
-
-function closeModal() {
-  if (!modalLayer || !modalContent) return;
-
-  modalLayer.classList.remove("active");
-  modalLayer.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
-  currentModal = null;
-
-  if (document.getElementById("screen-invite")) {
-    goToScreen("screen-invite");
-  }
-
-  setTimeout(() => {
-    if (!modalLayer.classList.contains("active")) {
-      modalContent.innerHTML = "";
+  progressDots.forEach((dot, index) => {
+    const isCurrent = index === currentSlide;
+    dot.classList.toggle("is-active", isCurrent);
+    if (isCurrent) {
+      dot.setAttribute("aria-current", "step");
+    } else {
+      dot.removeAttribute("aria-current");
     }
-  }, 260);
+  });
+
+  previousSlideButton.disabled = currentSlide === 0;
+  nextSlideButton.disabled = currentSlide === slides.length - 1;
+  carouselStatus.textContent = `Informação ${currentSlide + 1} de ${slides.length}`;
 }
 
-function confirmPresence() {
-  if (!modalContent) return;
+function scheduleSlideView() {
+  clearTimeout(slideViewTimer);
+  if (viewedSlides.has(currentSlide)) return;
 
-  currentModal = "confirmed";
+  slideViewTimer = setTimeout(() => {
+    viewedSlides.add(currentSlide);
+    informationCompleted = viewedSlides.size === slides.length;
 
-  modalContent.innerHTML = `
-    <div class="confirmed-state">
-      <div class="confirmed-symbol">✓</div>
-      <h2 id="modal-title">Presença confirmada</h2>
-
-
-      <div class="modal-actions">
-        <button class="button" type="button" onclick="closeModal()">
-          Fechar
-        </button>
-      </div>
-    </div>
-  `;
+    if (informationCompleted) {
+      unlockedMessage.hidden = false;
+      inviteVideo.hidden = false;
+      inviteVideoPlayer?.load();
+    }
+  }, SLIDE_VIEW_DURATION);
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modalLayer?.classList.contains("active")) {
-    closeModal();
+function goToSlide(index) {
+  if (index < 0 || index >= slides.length || index === currentSlide) return;
+
+  currentSlide = index;
+  updateCarousel();
+  scheduleSlideView();
+}
+
+previousSlideButton?.addEventListener("click", () => goToSlide(currentSlide - 1));
+nextSlideButton?.addEventListener("click", () => goToSlide(currentSlide + 1));
+
+progressDots.forEach((dot, index) => {
+  dot.addEventListener("click", () => goToSlide(index));
+});
+
+carousel?.addEventListener("keydown", (event) => {
+  if (event.target !== carousel) return;
+
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    goToSlide(currentSlide - 1);
+  } else if (event.key === "ArrowRight") {
+    event.preventDefault();
+    goToSlide(currentSlide + 1);
   }
 });
+
+let pointerStartX = null;
+carouselViewport?.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "mouse" && event.button !== 0) return;
+  pointerStartX = event.clientX;
+});
+
+carouselViewport?.addEventListener("pointerup", (event) => {
+  if (pointerStartX === null) return;
+
+  const swipeDistance = event.clientX - pointerStartX;
+  pointerStartX = null;
+
+  if (Math.abs(swipeDistance) > 48) {
+    goToSlide(currentSlide + (swipeDistance < 0 ? 1 : -1));
+  }
+});
+
+carouselViewport?.addEventListener("pointercancel", () => {
+  pointerStartX = null;
+});
+
+window.addEventListener("resize", updateCarousel);
+updateCarousel();
