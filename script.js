@@ -69,6 +69,7 @@ function startOpeningVideo() {
 
     openingVideo.play().catch(() => {
       console.warn("O navegador bloqueou a reprodução automática com áudio.");
+      finishOpeningVideo();
     });
   }
 
@@ -102,6 +103,11 @@ function finishOpeningVideo() {
 
 openingVideo?.addEventListener("loadedmetadata", syncVideoProgress);
 openingVideo?.addEventListener("ended", finishOpeningVideo);
+openingVideo?.addEventListener("error", () => {
+  if (document.getElementById("screen-video")?.classList.contains("active")) {
+    finishOpeningVideo();
+  }
+});
 
 function updateCarousel() {
   if (!carouselTrack || !carouselViewport || !slides.length) return;

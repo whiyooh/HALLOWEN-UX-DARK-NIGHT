@@ -2046,6 +2046,28 @@ width: -8%; height: 0%;
   transform: none;
 }
 
+.invite-slide .slide-header {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.invite-slide .slide-body,
+.invite-slide .slide-body p,
+.invite-slide .slide-body h3,
+.invite-slide .slide-body li {
+  text-align: center;
+}
+
+.invite-slide .slide-body ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.invite-slide .slide-actions {
+  margin-inline: auto;
+}
+
 .slide-header {
   min-height: 82px;
   display: flex;
